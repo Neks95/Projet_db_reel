@@ -1,0 +1,40 @@
+<?php
+require("connexion.php");
+
+function getDept()
+{
+    $query = "SELECT * FROM departments";
+    $requete = mysqli_query(bdconnect(), $query);
+    $departement = [];
+    while ($temp = mysqli_fetch_assoc($requete)) {
+        $departement[] = $temp;
+    }
+    return $departement;
+}
+
+function getManager()
+{
+    $query = "SELECT d.dept_no,d.dept_name,e.first_name,e.last_name FROM departments d JOIN dept_manager dm on d.dept_no = dm.dept_no JOIN employees e on dm.emp_no = e.emp_no WHERE dm.to_date = '9999-01-01'
+";
+    $requete = mysqli_query(bdconnect(), $query);
+    $departement = [];
+    while ($temp = mysqli_fetch_assoc($requete)) {
+        $departement[] = $temp;
+    }
+    return $departement;
+}
+
+function getEmp($idd)
+{
+    $query = "SELECT * FROM dept_emp d JOIN employees e ON d.emp_no = e.emp_no WHERE d.dept_no = '%s'";
+    $query = sprintf($query,$idd);
+    $requete = mysqli_query(bdconnect(), $query);
+    $emp = [];
+    while ($temp = mysqli_fetch_assoc($requete)) {
+        $emp[] = $temp;
+    }
+    return $emp;
+}
+
+
+?>
