@@ -33,7 +33,7 @@ $emp = getEmp($id);
                 <?php foreach ($emp as $empp) { ?>
                     <tr>
                         <td><?php echo $empp['emp_no']?></td>
-                        <td><a href="fiche.php"><?php echo $empp['first_name']?></a></td>
+                        <td><a href="fiche.php?nb=<?php echo $empp['emp_no'] ?>"><?php echo $empp['first_name']?></a></td>
                         <td><?php echo $empp['last_name'] ?></td>                  
                         </td>
                     </tr>

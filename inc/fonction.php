@@ -36,5 +36,14 @@ function getEmp($idd)
     return $emp;
 }
 
+function get_info_emp($emp_no){
+    $requete = "SELECT * FROM employees e
+                WHERE e.emp_no = '%s'";
+    $requete = sprintf($requete,$emp_no);
+    $donnees = mysqli_query(bdconnect(), $requete);
+    $result =  mysqli_fetch_assoc($donnees);
 
+    return $result;
+    
+}
 ?>
