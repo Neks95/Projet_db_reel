@@ -60,6 +60,7 @@ $titre = getTitre($emp_no);
             </div>
         </section>
         <section>
+            <h2 class="mb-4 mt-4">Historique des salaires</h2>
             <div class="table-responsive">
                 <table class="table table-bordered table-striped">
                     <thead class="table-dark">
