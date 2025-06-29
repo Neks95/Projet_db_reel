@@ -44,6 +44,28 @@ function get_info_emp($emp_no){
     $result =  mysqli_fetch_assoc($donnees);
 
     return $result;
-    
+}
+
+function getSalaire ($ide){
+    $requete = "SELECT * FROM salaries where emp_no = '%s' ";
+    $requete  = sprintf($requete,$ide);
+    $result = mysqli_query(bdconnect(),$requete);
+    $sal= [];
+    while ($temp = mysqli_fetch_assoc($result)) {
+        $sal[] = $temp;
+    }
+    return $sal;
+}
+
+function getTitre($ide){
+    $requete = "SELECT  * FROM titles where emp_no = '%s'";
+    $requete  = sprintf($requete,$ide);
+    $result = mysqli_query(bdconnect(),$requete);
+    $ti= [];
+    while ($temp = mysqli_fetch_assoc($result)) {
+        $ti[] = $temp;
+    }
+    return $ti;
+
 }
 ?>
