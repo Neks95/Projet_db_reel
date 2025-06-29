@@ -66,6 +66,28 @@ function getTitre($ide){
         $ti[] = $temp;
     }
     return $ti;
-
 }
+
+function rechercher($dep, $nom, $max, $min) {
+    $sql = "
+        SELECT e.emp_no, e.first_name, e.last_name, e.birth_date, d.dept_name
+        FROM employees e
+        JOIN dept_emp de ON e.emp_no = de.emp_no
+        JOIN departments d ON d.dept_no = de.dept_no
+        WHERE d.dept_name LIKE '%%%s%%'
+        AND e.first_name LIKE '%%%s%%'
+        AND TIMESTAMPDIFF(YEAR, e.birth_date, CURDATE()) BETWEEN %d AND %d
+        LIMIT 50
+    ";
+
+    $sql = sprintf($sql, $dep, $nom, $min, $max);
+
+    $result = mysqli_query(bdconnect(), $sql);
+    $valiny = [];
+    while ($row = mysqli_fetch_assoc($result)) {
+        $valiny[] = $row;
+    }
+    return $valiny;
+}
+
 ?>
