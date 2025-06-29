@@ -72,12 +72,21 @@ $titre = getTitre($emp_no);
                     <tbody>
                         <?php foreach ($titre as $t) { ?>
                             <tr>
-                                <td><?php echo $t['title']; ?> </td>
+                                <td><?php echo $t['title']; ?></td>
                                 <td><?php echo $t['from_date']; ?></td>
-                                <td><?php echo $t['to_date']; ?></td>
+                                <td>
+                                    <?php
+                                    if ($t['to_date'] == "9999-01-01") {
+                                        echo "aujourd'hui";
+                                    } else {
+                                        echo $t['to_date'];
+                                    }
+                                    ?>
+                                </td>
                             </tr>
                         <?php } ?>
                     </tbody>
+
                 </table>
             </div>
 
