@@ -22,21 +22,27 @@ $val = rechercher($dep, $nom, $max, $min);
 
 <body>
     <header>
-        <h1 class="text-center mt-4 mb-4 text-dark">Resultat du recherche dans <span
-                class="text-danger"><?php echo $dep ?></span></h1>
+        <div class="container d-flex align-items-center mt-4 mb-4">
+            <a href="index.php"><img src="../assets/images/bouton-retour.png" height="40px" class="me-3"></a>
+            <h1 class="m-0 text-dark">
+                Résultat de la recherche dans
+                <span class="text-danger"><?php echo $dep ?></span>
+            </h1>
+        </div>
     </header>
+
     <main>
         <div class="container">
             <?php if (!empty($val)) { ?>
 
-            <table class="mt-5 table table-hover table-dark table responsive">
-                <thead class="table-light text-dark">
-                    <tr>
-                        <th scope="col">Numero</th>
-                        <th>Nom</th>
-                        <th scope="col">Prenom</th>
-                    </tr>
-                </thead>
+                <table class="mt-5 table table-hover table-dark table responsive">
+                    <thead class="table-light text-dark">
+                        <tr>
+                            <th scope="col">Numero</th>
+                            <th>Nom</th>
+                            <th scope="col">Prenom</th>
+                        </tr>
+                    </thead>
                     <?php foreach ($val as $v) { ?>
                         <tr>
                             <td><?php echo $v['emp_no'] ?></td>

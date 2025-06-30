@@ -42,7 +42,6 @@ function get_info_emp($emp_no){
     $requete = sprintf($requete,$emp_no);
     $donnees = mysqli_query(bdconnect(), $requete);
     $result =  mysqli_fetch_assoc($donnees);
-
     return $result;
 }
 
