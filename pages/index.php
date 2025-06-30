@@ -50,7 +50,6 @@ $dep = getManager();
                     <div class="form-group mb-3">
                         <label for="departement" class="form-label">Departement :</label>
                         <select name="departement" id="departement" class="form-select">
-                        
                             <?php foreach ($dep as $nomdep) { ?>
                                 <option value="<?php echo $nomdep['dept_name']; ?>">
                                     <?php echo $nomdep['dept_name']; ?>
@@ -77,7 +76,6 @@ $dep = getManager();
                         <input type="number" class="form-control" name="min">
                     </div>
 
-                    <!-- Bouton -->
                     <button type="submit" class="btn btn-secondary w-100">Rechercher</button>
                 </form>
             </section>
