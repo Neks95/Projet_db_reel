@@ -4,6 +4,8 @@ $emp_no = $_GET['nb'];
 $info = get_info_emp($emp_no);
 $salaire = getSalaire($emp_no);
 $titre = getTitre($emp_no);
+$sa = salaireActuel($emp_no);
+$ti = titreActuel($emp_no);
 ?>
 
 <!DOCTYPE html>
@@ -16,7 +18,6 @@ $titre = getTitre($emp_no);
     <link href="../assets/css/bootstrap.min.css" rel="stylesheet">
     <script src="../assets/js/bootstrap.bundle.min.js"></script>
     <link rel="stylesheet" href="../assets/style.css">
-
 </head>
 
 <body>
@@ -36,6 +37,17 @@ $titre = getTitre($emp_no);
                         <p><strong>Date de naissance :</strong> <?php echo $info['birth_date']; ?></p>
                         <p><strong>Genre :</strong> <?php echo $info['gender']; ?></p>
                         <p><strong>Date d'embauche :</strong> <?php echo $info['hire_date']; ?></p>
+                        <p><strong>Departement : </strong><?php echo $info['dept_name']?></p>
+                          <?php if (!empty($ti)) { ?>
+                            <?php foreach ($ti as $tt) { ?>
+                            <?php } ?>
+                              <p><strong>Titre : </strong> : <?php echo $tt['title']?></p>
+                        <?php }?>
+                        <?php if (!empty($sa)) { ?>
+                            <?php foreach ($sa as $sal) { ?>
+                            <?php } ?>
+                              <p><strong>Salaire actuel depuis le <?php echo $sal['from_date'] ?></strong> : <?php echo $sal['salary']?> $ </p>
+                        <?php }?>
                     </div>
                 </div>
             </div>
@@ -52,19 +64,14 @@ $titre = getTitre($emp_no);
                         </thead>
                         <tbody>
                             <?php foreach ($salaire as $s) { ?>
-                                <tr>
-                                    <td><?php echo $s['salary']; ?> $</td>
-                                    <td><?php echo $s['from_date']; ?></td>
-                                     <td>
-                                        <?php
-                                        if ($s['to_date'] == "9999-01-01") {
-                                            echo "aujourd'hui";
-                                        } else {
-                                            echo $s['to_date'];
-                                        }
-                                        ?>
-                                    </td>
-                                </tr>
+                                <?php if ($s['to_date'] != "9999-01-01") { ?>
+                                    <tr>
+                                        <td><?php echo $s['salary']; ?> $</td>
+                                        <td><?php echo $s['from_date']; ?></td>
+                                         <td><?php echo $s['to_date'];?>
+                                        </td>
+                                    </tr>
+                                <?php } ?>
                             <?php } ?>
                         </tbody>
                     </table>
@@ -83,19 +90,14 @@ $titre = getTitre($emp_no);
                         </thead>
                         <tbody>
                             <?php foreach ($titre as $t) { ?>
-                                <tr>
-                                    <td><?php echo $t['title']; ?></td>
-                                    <td><?php echo $t['from_date']; ?></td>
-                                    <td>
-                                        <?php
-                                        if ($t['to_date'] == "9999-01-01") {
-                                            echo "aujourd'hui";
-                                        } else {
-                                            echo $t['to_date'];
-                                        }
-                                        ?>
-                                    </td>
-                                </tr>
+                                <?php if ($tt['to_date'] != "9999-01-01") { ?>
+                                  
+                                    <tr>
+                                        <td><?php echo $t['title']; ?></td>
+                                        <td><?php echo $t['from_date']; ?></td>
+                                        <td><?php echo $t['to_date']; ?></td>
+                                    </tr>
+                                <?php } ?>
                             <?php } ?>
                         </tbody>
 

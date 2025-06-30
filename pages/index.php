@@ -26,7 +26,6 @@ $dep = getManager();
                 <table class="mt-5 table table-bordered table-hover table-dark ">
                     <thead class="table-light text-dark">
                         <tr>
-                            <th scope="col">Numero</th>
                             <th scope="col">Nom du departement</th>
                             <th scope="col">Manager</th>
                             <th scope="col">Employes</th>
@@ -34,7 +33,6 @@ $dep = getManager();
                     </thead>
                     <?php foreach ($dep as $depp) { ?>
                         <tr>
-                            <td><?php echo $depp['dept_no'] ?></td>
                             <td><?php echo $depp['dept_name'] ?></td>
                             <td><?php echo $depp['first_name'] . ' ' . $depp['last_name'] ?></td>
                             <td><a class="btn btn-secondary " href="emp.php?id=<?php echo $depp['dept_no'] ?>">Voir plus</a>
@@ -50,6 +48,7 @@ $dep = getManager();
                     <div class="form-group mb-3">
                         <label for="departement" class="form-label">Departement :</label>
                         <select name="departement" id="departement" class="form-select">
+                            <option value="tous">tous </option>
                             <?php foreach ($dep as $nomdep) { ?>
                                 <option value="<?php echo $nomdep['dept_name']; ?>">
                                     <?php echo $nomdep['dept_name']; ?>
