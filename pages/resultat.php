@@ -48,12 +48,7 @@ $val = rechercher($dep, $nom, $max, $min);
                 <?php } ?>
                 <?php if (empty($val)) { ?>
                     <h3 class="text-center mt-4 mb-4 text-dark">Aucun employe de ce nom</h3>
-
                 <?php } ?>
-
-
-
-
             </table>
         </div>
     </main>
