@@ -22,10 +22,12 @@ $val = rechercher($dep, $nom, $max, $min);
 
 <body>
     <header>
-        <h1 class="text-center mt-4 mb-4 text-dark">Resultat du recherche dans <span class="text-danger"><?php echo $dep?></span></h1>
+        <h1 class="text-center mt-4 mb-4 text-dark">Resultat du recherche dans <span
+                class="text-danger"><?php echo $dep ?></span></h1>
     </header>
     <main>
         <div class="container">
+            <?php if (!empty($val)) { ?>
 
             <table class="mt-5 table table-hover table-dark table responsive">
                 <thead class="table-light text-dark">
@@ -35,15 +37,23 @@ $val = rechercher($dep, $nom, $max, $min);
                         <th scope="col">Prenom</th>
                     </tr>
                 </thead>
-                <?php foreach ($val as $v) { ?>
-                    <tr>
-                        <td><?php echo $v['emp_no'] ?></td>
-                        <td><a href="fiche.php?nb=<?php echo $v['emp_no'] ?>"> <?php echo $v['first_name'] ?></a></td>
-                        <td><?php echo $v['last_name'] ?></td>
-                        </td>
-                    </tr>
+                    <?php foreach ($val as $v) { ?>
+                        <tr>
+                            <td><?php echo $v['emp_no'] ?></td>
+                            <td><a href="fiche.php?nb=<?php echo $v['emp_no'] ?>"> <?php echo $v['first_name'] ?></a></td>
+                            <td><?php echo $v['last_name'] ?></td>
+                            </td>
+                        </tr>
+                    <?php } ?>
                 <?php } ?>
-    
+                <?php if (empty($val)) { ?>
+                    <h3 class="text-center mt-4 mb-4 text-dark">Aucun employe de ce nom</h3>
+
+                <?php } ?>
+
+
+
+
             </table>
         </div>
     </main>

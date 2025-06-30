@@ -77,7 +77,6 @@ function rechercher($dep, $nom, $max, $min) {
         WHERE d.dept_name LIKE '%%%s%%'
         AND e.first_name LIKE '%%%s%%'
         AND TIMESTAMPDIFF(YEAR, e.birth_date, CURDATE()) BETWEEN %d AND %d
-        
     ";
 
     $sql = sprintf($sql, $dep, $nom, $min, $max);
