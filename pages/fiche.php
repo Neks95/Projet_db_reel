@@ -55,7 +55,15 @@ $titre = getTitre($emp_no);
                                 <tr>
                                     <td><?php echo $s['salary']; ?> $</td>
                                     <td><?php echo $s['from_date']; ?></td>
-                                    <td><?php echo $s['to_date']; ?></td>
+                                     <td>
+                                        <?php
+                                        if ($s['to_date'] == "9999-01-01") {
+                                            echo "aujourd'hui";
+                                        } else {
+                                            echo $s['to_date'];
+                                        }
+                                        ?>
+                                    </td>
                                 </tr>
                             <?php } ?>
                         </tbody>
@@ -63,7 +71,7 @@ $titre = getTitre($emp_no);
                 </div>
             </section>
             <section>
-                <h2 class="mb-4 mt-4">Historique des salaires</h2>
+                <h2 class="mb-4 mt-4">Historique des titres</h2>
                 <div class="table-responsive">
                     <table class="table table-bordered table-striped">
                         <thead class="table-dark">
