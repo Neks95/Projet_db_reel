@@ -17,9 +17,15 @@ $emp = getEmp($id);
 
 <body>
     <div class="container mt-5">
-        <header>
-            <h1 class="text-center mb-4 text-dark"> Departements et les employes</h1>
-        </header>
+   <header>
+        <h1 class="text-center mb-4 text-dark">
+            Les employes dans 
+            <?php
+            if (isset($emp[0]['dept_name'])) {
+                echo htmlspecialchars($emp[0]['dept_name']);
+            }?>   
+        </h1>
+    </header>
         <main>
             <table class="mt-5 table table-hover table-dark ">
                 <thead class="table-light text-dark">

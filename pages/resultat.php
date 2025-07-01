@@ -17,7 +17,7 @@ if (!isset($_SESSION['min'])) {
 }
 $min = $_SESSION['min'];
 $p = isset($_GET['p'])? $_GET['p'] : 0;
-$limite=$p*0;
+$limite=$p*20;
 $val = rechercher($dep, $nom, $max, $min,$limite);
 
 
@@ -57,19 +57,22 @@ $val = rechercher($dep, $nom, $max, $min,$limite);
                             <th scope="col">Prenom</th>
                         </tr>
                     </thead>
-                    <?php foreach ($val as $v) { ?>
+                    <?php $i = 0; foreach ($val as $v) { ?>
                         <tr>
-                            <td><?php echo $v['emp_no'] ?></td>
+                            <td><?php echo $limite + $i + 1; ?></td>
                             <td><a href="fiche.php?nb=<?php echo $v['emp_no'] ?>"> <?php echo $v['first_name'] ?></a></td>
                             <td><?php echo $v['last_name'] ?></td>
-                            </td>
                         </tr>
-                    <?php } ?>
+                    <?php $i++; } ?>
                     </table>
-                <?php if ($p>0) {?>
-                    <a href="resultat.php?p=<?php $p-1?>"><button class="secondary">precedent</button></a>
-               <?php } ?>
-               <a href="resultat.php?p=<?php $p+1?>"><button class="secondary">suivant</button></a>
+               <?php if ($p > 0) { ?>
+    <a href="resultat.php?p=<?php echo $p - 1; ?>&departement=<?php echo urlencode($dep); ?>&nom=<?php echo urlencode($nom); ?>&max=<?php echo urlencode($max); ?>&min=<?php echo urlencode($min); ?>">
+        <button class="secondary">précédent</button>
+    </a>
+<?php } ?>
+<a href="resultat.php?p=<?php echo $p + 1; ?>&departement=<?php echo urlencode($dep); ?>&nom=<?php echo urlencode($nom); ?>&max=<?php echo urlencode($max); ?>&min=<?php echo urlencode($min); ?>">
+    <button class="secondary">suivant</button>
+</a>
                    <?php } ?>
                 <?php if (empty($val)) { ?>
                     <h3 class="text-center mt-4 mb-4 text-dark">Aucun employe de ce nom</h3>

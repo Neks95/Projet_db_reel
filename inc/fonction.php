@@ -3,7 +3,7 @@ require("connexion.php");
 
 function getDept()
 {
-    $query = "SELECT * FROM departments";
+    $query = "SELECT * FROM departments ORDER BY dept_name ASC";
     $requete = mysqli_query(bdconnect(), $query);
     $departement = [];
     while ($temp = mysqli_fetch_assoc($requete)) {
@@ -26,7 +26,11 @@ function getManager()
 
 function getEmp($idd)
 {
-    $query = "SELECT * FROM dept_emp d JOIN employees e ON d.emp_no = e.emp_no WHERE d.dept_no = '%s'";
+    $query = "SELECT e.*, de.dept_name 
+              FROM dept_emp d 
+              JOIN employees e ON d.emp_no = e.emp_no 
+              JOIN departments de ON d.dept_no = de.dept_no 
+              WHERE d.dept_no = '%s'";
     $query = sprintf($query, $idd);
     $requete = mysqli_query(bdconnect(), $query);
     $emp = [];
