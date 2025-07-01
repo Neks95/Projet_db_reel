@@ -99,7 +99,7 @@ function titreActuel($ide)
 
 }
 
-function rechercher($dep, $nom, $max, $min)
+function rechercher($dep, $nom, $max, $min,$limite)
 {
     $valiny = [];
     if ($dep == "tous") {
@@ -108,11 +108,13 @@ function rechercher($dep, $nom, $max, $min)
             FROM employees e
             JOIN dept_emp de ON e.emp_no = de.emp_no
             JOIN departments d ON d.dept_no = de.dept_no
-            WHERE  e.first_name LIKE '%%%s%%'
+            WHERE  1=1
+            AND e.first_name LIKE '%%%s%%'
             AND TIMESTAMPDIFF(YEAR, e.birth_date, CURDATE()) BETWEEN %d AND %d
+            LIMIT %d,20
         ";
     
-        $sql = sprintf($sql,  $nom, $min, $max);
+        $sql = sprintf($sql,  $nom, $min, $max,$limite);
     
         $result = mysqli_query(bdconnect(), $sql);
         while ($row = mysqli_fetch_assoc($result)) {
@@ -125,12 +127,14 @@ function rechercher($dep, $nom, $max, $min)
             FROM employees e
             JOIN dept_emp de ON e.emp_no = de.emp_no
             JOIN departments d ON d.dept_no = de.dept_no
-            WHERE  d.dept_name LIKE '%%%s%%' AND
+            WHERE  1=1
+            AND d.dept_name LIKE '%%%s%%' AND
             e.first_name LIKE '%%%s%%'
             AND TIMESTAMPDIFF(YEAR, e.birth_date, CURDATE()) BETWEEN %d AND %d
+            LIMIT %d,20
         ";
     
-        $sql = sprintf($sql, $dep, $nom, $min, $max);
+        $sql = sprintf($sql, $dep, $nom, $min, $max,$limite);
     
         $result = mysqli_query(bdconnect(), $sql);
         while ($row = mysqli_fetch_assoc($result)) {

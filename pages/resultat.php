@@ -1,10 +1,24 @@
 <?php
 include("../inc/fonction.php");
-$dep = $_GET['departement'];
-$nom = $_GET['nom'];
-$max = $_GET['max'];
-$min = $_GET['min'];
-$val = rechercher($dep, $nom, $max, $min);
+if (!isset($_SESSION['dep'])) {
+    $_SESSION['dep'] = $_GET['departement'];
+}
+$dep = $_SESSION['dep'];
+if (!isset($_SESSION['nom'])) {
+    $_SESSION['nom'] = $_GET['nom'];
+}
+$nom = $_SESSION['nom'];
+if (!isset($_SESSION['max'])) {
+    $_SESSION['max'] = $_GET['max'];
+}
+$max = $_SESSION['max'];
+if (!isset($_SESSION['min'])) {
+    $_SESSION['min'] = $_GET['min'];
+}
+$min = $_SESSION['min'];
+$p = isset($_GET['p'])? $_GET['p'] : 0;
+$limite=$p*0;
+$val = rechercher($dep, $nom, $max, $min,$limite);
 
 
 ?>
@@ -26,7 +40,7 @@ $val = rechercher($dep, $nom, $max, $min);
             <a href="index.php"><img src="../assets/images/bouton-retour.png" height="40px" class="me-3"></a>
             <h1 class="m-0 text-dark">
                 Résultat de la recherche dans
-                <span class="text-danger"><?php echo $dep ?></span>
+                <span class="text-danger"><?php echo $_SESSION['dep'] ?></span>
             </h1>
         </div>
     </header>
@@ -51,11 +65,16 @@ $val = rechercher($dep, $nom, $max, $min);
                             </td>
                         </tr>
                     <?php } ?>
-                <?php } ?>
+                    </table>
+                <?php if ($p>0) {?>
+                    <a href="resultat.php?p=<?php $p-1?>"><button class="secondary">precedent</button></a>
+               <?php } ?>
+               <a href="resultat.php?p=<?php $p+1?>"><button class="secondary">suivant</button></a>
+                   <?php } ?>
                 <?php if (empty($val)) { ?>
                     <h3 class="text-center mt-4 mb-4 text-dark">Aucun employe de ce nom</h3>
                 <?php } ?>
-            </table>
+          
         </div>
     </main>
 
