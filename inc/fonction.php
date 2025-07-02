@@ -149,6 +149,39 @@ function rechercher($dep, $nom, $max, $min,$limite)
     return $valiny;
 }
 
+function rechercherCount($dep, $nom, $max, $min)
+{
+    if ($dep == "tous") {
+        $sql = "
+            SELECT COUNT(*) as total
+            FROM employees e
+            JOIN dept_emp de ON e.emp_no = de.emp_no
+            JOIN departments d ON d.dept_no = de.dept_no
+            WHERE 1=1
+            AND e.first_name LIKE '%%%s%%'
+            AND TIMESTAMPDIFF(YEAR, e.birth_date, CURDATE()) BETWEEN %d AND %d
+        ";
+        $sql = sprintf($sql, $nom, $min, $max);
+    } else {
+        $sql = "
+            SELECT COUNT(*) as total
+            FROM employees e
+            JOIN dept_emp de ON e.emp_no = de.emp_no
+            JOIN departments d ON d.dept_no = de.dept_no
+            WHERE 1=1
+            AND d.dept_name LIKE '%%%s%%'
+            AND e.first_name LIKE '%%%s%%'
+            AND TIMESTAMPDIFF(YEAR, e.birth_date, CURDATE()) BETWEEN %d AND %d
+        ";
+        $sql = sprintf($sql, $dep, $nom, $min, $max);
+    }
+
+    $result = mysqli_query(bdconnect(), $sql);
+    $row = mysqli_fetch_assoc($result);
+    return $row['total'];
+}
+
+
 
 
 ?>

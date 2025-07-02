@@ -16,9 +16,11 @@ if (!isset($_SESSION['min'])) {
     $_SESSION['min'] = $_GET['min'];
 }
 $min = $_SESSION['min'];
-$p = isset($_GET['p'])? $_GET['p'] : 0;
-$limite=$p*20;
-$val = rechercher($dep, $nom, $max, $min,$limite);
+$p = isset($_GET['p']) ? $_GET['p'] : 0;
+$limite = $p * 20;
+$val = rechercher($dep, $nom, $max, $min, $limite);
+$total = rechercherCount($dep, $nom, $max, $min);
+$nombre_page = ceil($total / 20);
 
 
 ?>
@@ -57,27 +59,49 @@ $val = rechercher($dep, $nom, $max, $min,$limite);
                             <th scope="col">Prenom</th>
                         </tr>
                     </thead>
-                    <?php $i = 0; foreach ($val as $v) { ?>
+                    <?php $i = 0;
+                    foreach ($val as $v) { ?>
                         <tr>
                             <td><?php echo $limite + $i + 1; ?></td>
                             <td><a href="fiche.php?nb=<?php echo $v['emp_no'] ?>"> <?php echo $v['first_name'] ?></a></td>
                             <td><?php echo $v['last_name'] ?></td>
                         </tr>
-                    <?php $i++; } ?>
-                    </table>
-               <?php if ($p > 0) { ?>
-    <a href="resultat.php?p=<?php echo $p - 1; ?>&departement=<?php echo urlencode($dep); ?>&nom=<?php echo urlencode($nom); ?>&max=<?php echo urlencode($max); ?>&min=<?php echo urlencode($min); ?>">
-        <button class="secondary">précédent</button>
-    </a>
-<?php } ?>
-<a href="resultat.php?p=<?php echo $p + 1; ?>&departement=<?php echo urlencode($dep); ?>&nom=<?php echo urlencode($nom); ?>&max=<?php echo urlencode($max); ?>&min=<?php echo urlencode($min); ?>">
-    <button class="secondary">suivant</button>
-</a>
-                   <?php } ?>
-                <?php if (empty($val)) { ?>
-                    <h3 class="text-center mt-4 mb-4 text-dark">Aucun employe de ce nom</h3>
-                <?php } ?>
-          
+                        <?php $i++;
+                    } ?>
+                </table>
+                <nav aria-label="Page navigation example" class="mt-4">
+                    <ul class="pagination justify-content-center">
+                    
+                        <li class="page-item <?php if ($p <= 0)
+                            echo 'disabled'; ?>">
+                            <a class="page-link"
+                                href="resultat.php?p=<?php echo $p - 1; ?>&departement=<?php echo urlencode($dep); ?>&nom=<?php echo urlencode($nom); ?>&max=<?php echo $max; ?>&min=<?php echo $min; ?>">Précédent</a>
+                        </li>
+
+                        <!-- //a revoir plus tard -->
+
+                        <?php for ($i = 0; $i < $nombre_page; $i++) { ?>
+                            <!-- <li class="page-item <?php if ($i == $p)
+                                echo 'active'; ?>">
+                                <a class="page-link"
+                                    href="resultat.php?p=<?php echo $i; ?>&departement=<?php echo urlencode($dep); ?>&nom=<?php echo urlencode($nom); ?>&max=<?php echo $max; ?>&min=<?php echo $min; ?>"><?php echo $i + 1; ?></a>
+                            </li> -->
+                        <?php } ?>
+
+                        <li class="page-item <?php if ($p == $nbPages - 1)
+                            echo 'disabled'; ?>">
+                            <a class="page-link"
+                                href="resultat.php?p=<?php echo $p + 1; ?>&departement=<?php echo urlencode($dep); ?>&nom=<?php echo urlencode($nom); ?>&max=<?php echo $max; ?>&min=<?php echo $min; ?>">Suivant</a>
+                        </li>
+                    </ul>
+                </nav>
+
+
+            <?php } ?>
+            <?php if (empty($val)) { ?>
+                <h3 class="text-center mt-4 mb-4 text-dark">Aucun employe de ce nom</h3>
+            <?php } ?>
+
         </div>
     </main>
 
