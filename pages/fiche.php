@@ -4,6 +4,21 @@ $emp_no = $_GET['nb'];
 $info = get_info_emp($emp_no);
 $salaire = getSalaire($emp_no);
 $titre = getTitre($emp_no);
+$longest_title = null;
+$max_duration = 0;
+foreach ($titre as $t) {
+    $from = new DateTime($t['from_date']);
+if ($t['to_date'] == "9999-01-01") {
+    $to = new DateTime();
+} else {
+    $to = new DateTime($t['to_date']);} 
+$interval = $from->diff($to);
+$duration = $interval->days;    
+if ($duration > $max_duration) {
+        $max_duration = $duration;
+        $longest_title = $t;
+    }
+}
 $sa = salaireActuel($emp_no);
 $ti = titreActuel($emp_no);
 ?>
@@ -41,8 +56,11 @@ $ti = titreActuel($emp_no);
                           <?php if (!empty($ti)) { ?>
                             <?php foreach ($ti as $tt) { ?>
                             <?php } ?>
-                              <p><strong>Titre : </strong> : <?php echo $tt['title']?></p>
-                        <?php }?>
+                                <p><strong>Titre : </strong> : <?php echo $tt['title']?></p>
+                            <?php }?>
+                            <?php if ($longest_title) { ?>
+                                <p><strong>Emploi le plus long :</strong> <?php echo htmlspecialchars($longest_title['title']); ?> ( <?php echo $longest_title['from_date']; ?> - <?php echo $longest_title['to_date'] == "9999-01-01" ? "aujourd'hui" : $longest_title['to_date']; ?>)</p>
+                            <?php } ?>
                         <?php if (!empty($sa)) { ?>
                             <?php foreach ($sa as $sal) { ?>
                             <?php } ?>

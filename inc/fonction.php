@@ -14,8 +14,13 @@ function getDept()
 
 function getManager()
 {
-    $query = "SELECT d.dept_no,d.dept_name,e.first_name,e.last_name FROM departments d JOIN dept_manager dm on d.dept_no = dm.dept_no JOIN employees e on dm.emp_no = e.emp_no WHERE dm.to_date = '9999-01-01'
-";
+    $query = "SELECT d.dept_no, d.dept_name, e.first_name, e.last_name, 
+                     (SELECT COUNT(*) FROM dept_emp de WHERE de.dept_no = d.dept_no) AS nb_employes
+              FROM departments d
+              JOIN dept_manager dm ON d.dept_no = dm.dept_no
+              JOIN employees e ON dm.emp_no = e.emp_no
+              WHERE dm.to_date = '9999-01-01'
+              ORDER BY d.dept_name ASC";
     $requete = mysqli_query(bdconnect(), $query);
     $departement = [];
     while ($temp = mysqli_fetch_assoc($requete)) {
@@ -24,14 +29,15 @@ function getManager()
     return $departement;
 }
 
-function getEmp($idd)
+function getEmp($idd,$limite)
 {
     $query = "SELECT e.*, de.dept_name 
               FROM dept_emp d 
               JOIN employees e ON d.emp_no = e.emp_no 
               JOIN departments de ON d.dept_no = de.dept_no 
-              WHERE d.dept_no = '%s'";
-    $query = sprintf($query, $idd);
+              WHERE d.dept_no = '%s'
+               LIMIT %d, 20";
+    $query = sprintf($query, $idd,$limite);
     $requete = mysqli_query(bdconnect(), $query);
     $emp = [];
     while ($temp = mysqli_fetch_assoc($requete)) {
@@ -181,7 +187,13 @@ function rechercherCount($dep, $nom, $max, $min)
     return $row['total'];
 }
 
-
-
+function countEmp($idd)
+{
+    $query = "SELECT COUNT(*) as total FROM dept_emp WHERE dept_no = '%s'";
+    $query = sprintf($query, $idd);
+    $requete = mysqli_query(bdconnect(), $query);
+    $result = mysqli_fetch_assoc($requete);
+    return $result['total'];
+}
 
 ?>

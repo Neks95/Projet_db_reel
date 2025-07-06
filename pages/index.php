@@ -28,6 +28,7 @@ $dep = getManager();
                         <tr>
                             <th scope="col">Nom du departement</th>
                             <th scope="col">Manager</th>
+                            <th scope="col">Nombre d'employés</th>
                             <th scope="col">Employes</th>
                         </tr>
                     </thead>
@@ -35,6 +36,7 @@ $dep = getManager();
                         <tr>
                             <td><?php echo $depp['dept_name'] ?></td>
                             <td><?php echo $depp['first_name'] . ' ' . $depp['last_name'] ?></td>
+                            <td><?php echo $depp['nb_employes']; ?></td>
                             <td><a class="btn btn-secondary " href="emp.php?id=<?php echo $depp['dept_no'] ?>">Voir plus</a>
                             </td>
                         </tr>
